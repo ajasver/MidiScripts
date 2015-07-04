@@ -1,6 +1,6 @@
+# Custom script for AJX TRaktor X1MK2 Based on:
 # http://remotescripts.blogspot.com
-# hanz.petrov@gmail.com
-# script for the FCB1010 in APC emulation mode
+
 
 from __future__ import with_statement
 
@@ -24,14 +24,14 @@ from MIDI_Map import *
 #MIDI_CC_TYPE = 1
 #MIDI_PB_TYPE = 2
 
-class FCB1020(ControlSurface):
-    __doc__ = " Script for FCB1010 in APC emulation mode "
+class X1MK2(ControlSurface):
+    __doc__ = " Script for Traktor X1MK2 in APC emulation mode "
 
     _active_instances = []
     def _combine_active_instances():
         track_offset = 0
         scene_offset = 0
-        for instance in FCB1020._active_instances:
+        for instance in X1MK2._active_instances:
             instance._activate_combination_mode(track_offset, scene_offset)
             track_offset += instance._session.width()
     _combine_active_instances = staticmethod(_combine_active_instances)
@@ -70,15 +70,15 @@ class FCB1020(ControlSurface):
 
 
     def _do_combine(self):
-        if self not in FCB1020._active_instances:
-            FCB1020._active_instances.append(self)
-            FCB1020._combine_active_instances()
+        if self not in X1MK2._active_instances:
+            X1MK2._active_instances.append(self)
+            X1MK2._combine_active_instances()
 
 
     def _do_uncombine(self):
-        if ((self in FCB1020._active_instances) and FCB1020._active_instances.remove(self)):
+        if ((self in X1MK2._active_instances) and X1MK2._active_instances.remove(self)):
             self._session.unlink()
-            FCB1020._combine_active_instances()
+            X1MK2._combine_active_instances()
 
 
     def _activate_combination_mode(self, track_offset, scene_offset):
