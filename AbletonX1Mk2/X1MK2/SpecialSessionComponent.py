@@ -8,9 +8,11 @@ class SpecialSessionComponent(SessionComponent):
     " Special SessionComponent for APC combination mode and button to fire selected clip slot "
     __module__ = __name__
 
-    def __init__(self, num_tracks, num_scenes):
-        SessionComponent.__init__(self, num_tracks, num_scenes)
+    def __init__(self, num_tracks, num_scenes, log_message, *a, **k):
+        self._log_message = log_message
+        SessionComponent.__init__(self, num_tracks, num_scenes, *a, **k)
         self._slot_launch_button = None
+       
 
 
     def disconnect(self):
@@ -26,7 +28,7 @@ class SpecialSessionComponent(SessionComponent):
         if self._is_linked():
             self._unlink()
         self.set_offsets(track_offset, scene_offset)
-        self._link()
+        #self._link()
 
 
     def unlink(self):
@@ -54,7 +56,11 @@ class SpecialSessionComponent(SessionComponent):
                 if (self.song().view.highlighted_clip_slot != None):
                     self.song().view.highlighted_clip_slot.fire()
 
-
+    
+#     def _update_stop_clips_led(self,index):
+#         self._log_message('Clip LED track index %s' % index)
+#         super(SpecialSessionComponent, self)._update_stop_clips_led(index)
+         
 
 # local variables:
 # tab-width: 4
