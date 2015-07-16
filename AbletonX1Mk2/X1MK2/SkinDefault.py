@@ -2,6 +2,9 @@
 Created on Jul 8, 2015
 
 @author: aj
+
+This is the 'Skin' used for the X1's clip colors.  It provides a mapping between states the clips 
+are in and colors the corresponding X1 buttons should be.  
 '''
 
 from _Framework.Skin import Skin

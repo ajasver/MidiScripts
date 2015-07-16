@@ -66,8 +66,8 @@ SEEKRWD = -1 #Seek rewind
 # Session Navigation (aka "red box")
 SESSIONLEFT = 18 #Session left
 SESSIONRIGHT = 19 #Session right
-SESSIONUP = 0 #Session up
-SESSIONDOWN = 127 #Session down
+SESSIONUP = 120 #Session up
+SESSIONDOWN = 121 #Session down
 ZOOMUP = -1 #Session Zoom up
 ZOOMDOWN = -1 #Session Zoom down
 ZOOMLEFT = -1 #Session Zoom left
@@ -101,12 +101,15 @@ CLIPNOTEMAP = ((30, 31), #Row 1
                (34, 35), #Row 3
                (36, 37))
 
-DELETECLIPNOTEMAP = (38, 39)
+DELETECLIPNOTEMAP = ((50, 51), #Row 1
+                     (44, 45), #Row 2
+                     (46, 47), #Row 3
+                     (48, 49))
 
 # Track Control
 MASTERSEL = -1 #Master track select
-TRACKSTOP = (-1, #Track 1 Clip Stop
-             -1)
+TRACKSTOP = (38, #Track 1 Clip Stop
+             39)
 TRACKSEL = (70, #Track 1 Select
            71, #Track 8
            )

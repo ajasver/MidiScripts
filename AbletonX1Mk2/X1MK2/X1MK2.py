@@ -127,7 +127,7 @@ class X1MK2(ControlSurface):
             for track_index in range(SESSION_WIDTH):
                 button = self._clip_map[CLIPNOTEMAP[scene_index][track_index]]
                 button.num_delayed_messages = 3
-                delete_button = self._note_map[DELETECLIPNOTEMAP[track_index]]
+                delete_button = self._note_map[DELETECLIPNOTEMAP[scene_index][track_index]]
                 button_row.append(button)
                 clip_slot = scene.clip_slot(track_index)
                 clip_slot.name = str(track_index) + '_Clip_Slot_' + str(scene_index)

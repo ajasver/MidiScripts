@@ -45,6 +45,13 @@ class HsbColor(Color):
     def brighten(self,hsb_value):
         "Brightens the HSB value"
         return (hsb_value[0],127,hsb_value[2])
+    
+    def _redden(self,hsb_value):
+        return (0, hsb_value[1], hsb_value[2])
+        
+    def make_red(self):
+        red = self._redden(self._hsb_value)
+        return HsbColor(red[0],red[1],red[2])
         
     def shade(self, shade_level):
         """
@@ -64,15 +71,12 @@ class HsbColor(Color):
 
 
     def draw(self,interface):
-#         assert interface.is_rgb
+        """
+        Draws the color using the interface (Should be instance of ColorButton)
+        """
         interface.send_value(self._hsb_value)
         
-#     def send_value(self,interface,hsb_value):
-#         assert interface.num_delayed_messages >= 3 #and isinstance(interface, ColorButtonElement)
-#         interface.hue_interface.send_value(hsb_value[0]) #send the Hue midi value
-#         interface.sat_interface.send_value(hsb_value[1]) #send the Saturation midi value
-#         interface.bri_interface.send_value(hsb_value[2]) #send the Brightness midi value
-        
+#
     def convert_to_midi_value(self):
         raise NotImplementedError, 'HSB values cannot be serialized'
     
@@ -96,9 +100,10 @@ class HsbColor(Color):
     
 class AnimatedColor(Color):
     """
-    Creates an animation between two RGB colors.
+    Creates an animation between two HSB colors.
     The animation is defined by "blink".
     """
+    _blink_cycle = 8
 
     @property
     def midi_value(self):
@@ -119,12 +124,14 @@ class AnimatedColor(Color):
             self.color1.draw(interface)
         else:
             self.color2.draw(interface)
-        self.blink_state = (self.blink_state+1) % 8 
+        self.blink_state = (self.blink_state+1) % self._blink_cycle 
         
  
     
 class Blink(AnimatedColor):
-
+    """
+    Fast blinks using the modulo of the blink value divided by 2.
+    """
 
     def draw(self, interface):
         blink = (self.blink_state/2) % 2
@@ -134,8 +141,11 @@ class Blink(AnimatedColor):
 
 
 class Pulse(AnimatedColor):
-    
+    """
+    Pulsing when the blink value is a factor of 4.
+    """
     def draw(self, interface):
+        
         blink = self.blink_state / 4
         super(Pulse,self).draw(interface,blink)
     
@@ -143,6 +153,10 @@ class Pulse(AnimatedColor):
 
     
 def toHSB(rgb_val):
+    """
+    Slightly modified from the version implemented in the Maschine midi scripts so that
+    it returns HSBColor objects instead of tuples.
+    """
     if _color_table.has_key(rgb_val):
         return _color_table[rgb_val]
     rv = rgb_val / 65536
@@ -179,6 +193,12 @@ def toHSB(rgb_val):
     
 
 class CLIP_COLOR_TABLE(object):
+    """
+    This is a mapping between Ableton's RGB values for clip colors and the X1's 
+    HSB values.  I borrowed the 'toHSB' function from Maschine with the assumption 
+    Native Instruments has already worked out how to do this conversion for Maschine
+    and it should be the same.
+    """
     
     def __init__(self, logger):
         self._color_list = []

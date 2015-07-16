@@ -19,7 +19,7 @@ class TrackFilterComponent(BaseTrackFilterComponent):
         self._on_off_button = None
 
     def disconnect(self):
-        if self._on_off_control != None:
+        if self._on_off_button != None:
             self._on_off_button = None
         super(TrackFilterComponent,self).disconnect()
 

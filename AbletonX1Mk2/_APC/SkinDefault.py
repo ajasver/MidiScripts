@@ -1,5 +1,5 @@
 #Embedded file name: /Users/versonator/Jenkins/live/Binary/Core_Release_64_static/midi-remote-scripts/_APC/SkinDefault.py
-from _Framework.Skin import Skin
+from _Framework.Skin import Skin, merge_skins
 from _Framework.ButtonElement import Color
 from Push.Colors import Rgb, Pulse, Blink
 GREEN = Color(1)
@@ -85,7 +85,7 @@ def make_biled_skin():
 
 
 def make_rgb_skin():
-    return Skin(RgbColors)
+    return merge_skins(Skin(RgbColors), Skin(Defaults))
 
 
 def make_stop_button_skin():

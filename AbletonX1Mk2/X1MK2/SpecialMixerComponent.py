@@ -7,6 +7,13 @@ from .OneButtonFXComponent import OneButtonFXComponent
 class MixerComponent(MixerComponentBase):
 
     def __init__(self, num_tracks, session, *a, **k):
+        """
+        Special version of MixerComponent based on the VCM600 Mixer component
+        but with the addition of two OneButtonFXComponent objects per track.  This allows
+        the user to assign the two FX assign buttons on the X1 to two AudioEffectsGroup
+        instruments on each of the two tracks.  They just need to be named 'FX1' and 
+        FX2'
+        """
         self._session = session
         self._track_eqs = [ TrackEQComponent() for _ in xrange(num_tracks) ]
         self._track_filters = [ TrackFilterComponent() for _ in xrange(num_tracks) ]
@@ -53,7 +60,7 @@ class MixerComponent(MixerComponentBase):
             self._session.log_message('Track %s: EQ: %s, Filter: %s, FX1: %s, FX2: %s' % 
                     (track_index, self._track_eqs[index]._device, self._track_filters[index]._device, self._track_fx1s[index]._device, self._track_fx2s[index]._device))
             
-            
+        
     def tracks_to_use(self):
         return tuple(self.song().visible_tracks) + tuple(self.song().return_tracks)
             
